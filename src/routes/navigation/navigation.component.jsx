@@ -2,7 +2,6 @@ import { Fragment } from "react";
 import { Outlet, Link } from "react-router-dom";
 import { ReactComponent as PanwarLogo } from "../../assister/panwar.svg";
 
-
 import "./navigation.styles.scss";
 const Navigation = function () {
   return (
@@ -16,7 +15,7 @@ const Navigation = function () {
           <Link className="nav-link" to={"/shop"}>
             shop
           </Link>
-          <Link className="nav-link" to={"/contact"}>
+          <Link className="nav-link" to={"/auth"}>
             contact
           </Link>
         </div>

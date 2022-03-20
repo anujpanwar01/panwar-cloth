@@ -4,6 +4,7 @@ import {
   signInWithPopup,
   signInWithRedirect,
   GoogleAuthProvider,
+  signInWithEmailAndPassword,
 } from "firebase/auth";
 import { getFirestore, doc, getDoc, setDoc } from "firebase/firestore";
 
@@ -29,10 +30,16 @@ provider.setCustomParameters({
 export const auth = getAuth();
 
 export const signInWithGooglePopup = () => signInWithPopup(auth, provider);
-
+export const signInWithGoogleRedirect = () =>
+  signInWithRedirect(auth, provider);
 export const db = getFirestore();
 
-export const createUser = async function (userAuth) {
+//additionaldata => we don't get back displayName in signup method
+// so for that we pass addional parameter and other information
+//and it will override the displayName method in firebase
+
+export const createUser = async function (userAuth, additonalData) {
+  if (!userAuth) return;
   const userDocRef = doc(db, "users", userAuth.uid);
 
   const userSnapShot = await getDoc(userDocRef);
@@ -44,9 +51,10 @@ export const createUser = async function (userAuth) {
 
     try {
       const setUserDetail = await setDoc(userDocRef, {
-        name: displayName,
+        displayName,
         email,
         createAt,
+        ...additonalData,
       });
       console.log(setUserDetail);
     } catch (err) {
@@ -54,4 +62,14 @@ export const createUser = async function (userAuth) {
     }
   }
   return userDocRef;
+};
+
+// export const createAuthUserWithEmailAndPassword = async (email, password) => {
+//   if (!email || !password) return;
+//   const user = await createAuthUserWithEmailAndPassword(auth, email, password);
+//   return user;
+// };
+export const signInAuthUserWithEmailAndPassword = async (email, password) => {
+  if (!email || !password) return;
+  return await signInWithEmailAndPassword(auth, email, password);
 };
