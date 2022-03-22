@@ -1,16 +1,18 @@
 import { useState } from "react";
 
 import {
-  //   createAuthUserWithEmailAndPassword,
-  signInAuthUserWithEmailAndPassword,
   auth,
   signInWithGooglePopup,
   createUser,
 } from "../../utilis/firebase.utils";
+import { signInWithEmailAndPassword } from "firebase/auth";
 
 import CustomBtn from "../../components/custom-btn/Cutom-btn.component";
 import FormInput from "../../components/form-input/Form-Input.component";
 import "./sign-in-form.styles.scss";
+
+//through this we get back the value or an object of context
+
 const SignInForm = () => {
   const [state, setState] = useState({
     email: "",
@@ -22,13 +24,8 @@ const SignInForm = () => {
     //password match
 
     try {
-      const { user } = await signInAuthUserWithEmailAndPassword(
-        auth,
-        email,
-        password
-      );
+      await signInWithEmailAndPassword(auth, email, password);
 
-      console.log(user);
       setState(() => {
         return {
           email: "",
@@ -65,8 +62,8 @@ const SignInForm = () => {
       };
     });
   };
-
   const { email, password } = state;
+  console.log(email, password);
   return (
     <div className="sign-up-container">
       <h2>Already have an account</h2>

@@ -9,6 +9,7 @@ import { createUserWithEmailAndPassword } from "firebase/auth";
 import FormInput from "../../components/form-input/Form-Input.component";
 import "./sign-up-form.styles.scss";
 import CustomBtn from "../../components/custom-btn/Cutom-btn.component";
+
 const SignUpForm = () => {
   const [state, setState] = useState({
     displayName: "",
@@ -30,10 +31,15 @@ const SignUpForm = () => {
         email,
         password
       );
-      createUser(user, { displayName });
+      //set data to usercontext
+
+      await createUser(user, { displayName });
       //   console.log(res);
     } catch (err) {
-      console.log(err);
+      if (err.code === "auth/email-already-in-use")
+        alert(
+          "User Email is already exist, Please switch the another email address."
+        );
     }
     // console.log(email, password);
     // createAuthUserWithEmailAndPassword(email, password);
