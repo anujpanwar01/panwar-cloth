@@ -5,10 +5,14 @@ import { UserContext } from "../../contex/user.context";
 import "./navigation.styles.scss";
 import { signOut } from "firebase/auth";
 import { auth } from "../../utilis/firebase.utils";
+import CartIcon from "../../components/cart-icon/cart-icon.component";
+import CartDropdown from "../../components/cart-dropdown/cart-dropdown.component";
+import { CartContext } from "../../contex/cart.context";
 
 const Navigation = function () {
   const { currentUser } = useContext(UserContext);
-  console.log(currentUser);
+
+  const { isCartOpen } = useContext(CartContext);
 
   const signOutHandler = async () => {
     await signOut(auth);
@@ -36,7 +40,9 @@ const Navigation = function () {
               Sign Out
             </span>
           )}
+          <CartIcon />
         </div>
+        {isCartOpen && <CartDropdown />}
       </div>
       <Outlet />
     </Fragment>
