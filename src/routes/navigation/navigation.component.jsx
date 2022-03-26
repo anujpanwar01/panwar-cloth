@@ -16,8 +16,6 @@ const Navigation = function () {
 
   const signOutHandler = async () => {
     await signOut(auth);
-    // it gives back the undefined
-    // setCurrentUser(null);
   };
 
   return (
