@@ -3,9 +3,11 @@ import { CartContext } from "../../contex/cart.context";
 
 import CustomBtn from "../custom-btn/Cutom-btn.component";
 import "./product-card.styles.scss";
-const ProductCard = (product) => {
+const ProductCard = ({ product }) => {
+  // const }=product
+  console.log(product);
   const { name, imageUrl, price } = product;
-
+  // console.log(name, imageUrl, price);
   const { addItemToCart } = useContext(CartContext);
 
   const addProductToCart = () => addItemToCart(product);
@@ -16,7 +18,7 @@ const ProductCard = (product) => {
         <span className="name">{name}</span>
         <span className="price">{price}</span>
       </div>
-      <CustomBtn type="inverted" onClick={addProductToCart}>
+      <CustomBtn tn type="inverted" onClick={addProductToCart}>
         Add to cart
       </CustomBtn>
     </div>

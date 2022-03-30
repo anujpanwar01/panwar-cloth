@@ -22,7 +22,7 @@ const App = function () {
       <Route path="/" element={<Navigation />}>
         <Route index path="/" element={<Home />} />
         <Route path="auth" element={<Authentication />} />
-        <Route path="shop" element={<Shop />} />
+        <Route path="shop/*" element={<Shop />} />
         <Route path="check-out" element={<Checkout />} />
       </Route>
     </Routes>
