@@ -2,7 +2,12 @@ import { Fragment, useContext } from "react";
 import { Outlet, Link } from "react-router-dom";
 import { ReactComponent as PanwarLogo } from "../../assister/panwar.svg";
 import { UserContext } from "../../contex/user.context";
-import "./navigation.styles.scss";
+import {
+  NavigationContainer,
+  NavLink,
+  NavLinks,
+  LogoContainer,
+} from "./navigation.styles.jsx";
 import { signOut } from "firebase/auth";
 import { auth } from "../../utilis/firebase.utils";
 import CartIcon from "../../components/cart-icon/cart-icon.component";
@@ -20,28 +25,22 @@ const Navigation = function () {
 
   return (
     <Fragment>
-      <div className="navigation">
-        <Link className="logo-container" to={"/"}>
-          <div>{<PanwarLogo />}</div>
-        </Link>
+      <NavigationContainer>
+        <LogoContainer to={"/"}>{<PanwarLogo />}</LogoContainer>
 
-        <div className="nav-link-container">
-          <Link className="nav-link" to={"/shop"}>
-            shop
-          </Link>
+        <NavLinks>
+          <NavLink to={"/shop"}>shop</NavLink>
           {!currentUser ? (
-            <Link className="nav-link" to={"/auth"}>
-              Sign In
-            </Link>
+            <NavLink to={"/auth"}>Sign In</NavLink>
           ) : (
-            <span className="nav-link" onClick={signOutHandler}>
+            <NavLink as="span" onClick={signOutHandler}>
               Sign Out
-            </span>
+            </NavLink>
           )}
           <CartIcon />
-        </div>
+        </NavLinks>
         {isCartOpen && <CartDropdown />}
-      </div>
+      </NavigationContainer>
       <Outlet />
     </Fragment>
   );
