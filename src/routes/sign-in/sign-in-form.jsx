@@ -7,7 +7,9 @@ import {
 } from "../../utilis/firebase.utils";
 import { signInWithEmailAndPassword } from "firebase/auth";
 
-import CustomBtn from "../../components/custom-btn/Cutom-btn.component";
+import CustomBtn, {
+  BUTTON_TYPE_CLASSES,
+} from "../../components/custom-btn/Cutom-btn.component";
 import FormInput from "../../components/form-input/Form-Input.component";
 import "./sign-in-form.styles.scss";
 
@@ -93,9 +95,8 @@ const SignInForm = () => {
         <div className="buttons-container">
           <CustomBtn type="submit">Sign In</CustomBtn>
           <CustomBtn
+            buttonType={BUTTON_TYPE_CLASSES.google}
             type="button"
-            className="google-sign-in"
-            buttontype="google"
             onClick={logGoogleUser}
           >
             Google Sign in
