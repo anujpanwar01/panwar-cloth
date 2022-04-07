@@ -6,12 +6,12 @@ import CategoryPreview from "../../components/category-preview/category-preview.
 import { categorySelector } from "../../store/categories/category.selector";
 
 const CategoreisPreview = () => {
-  const categoriesMap = useSelector(categorySelector);
+  const categories = useSelector(categorySelector);
 
   return (
     <Fragment>
-      {Object.keys(categoriesMap).map((title) => {
-        const products = categoriesMap[title];
+      {Object.keys(categories).map((title) => {
+        const products = categories[title];
         return (
           <CategoryPreview key={title} title={title} products={products} />
         );
