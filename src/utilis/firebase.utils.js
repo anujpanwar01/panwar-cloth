@@ -64,6 +64,7 @@ export const getCollectionAndDocRef = async () => {
   const q = query(collectionRef);
 
   const querySnapShot = await getDocs(q);
+  return querySnapShot.docs.map((ele) => ele.data());
   /*
 {
   title:'hats',
@@ -75,12 +76,12 @@ export const getCollectionAndDocRef = async () => {
 */
   // for this structure we need to map over the data
 
-  const categoryMap = querySnapShot.docs.reduce((acc, ele) => {
-    const { title, items } = ele.data();
-    acc[title.toLowerCase()] = items;
-    return acc;
-  }, {});
-  return categoryMap;
+  // const categoryMap = querySnapShot.docs.reduce((acc, ele) => {
+  //   const { title, items } = ele.data();
+  //   acc[title.toLowerCase()] = items;
+  //   return acc;
+  // }, {});
+  // return categoryMap;
 };
 //additionaldata => we don't get back displayName in signup method
 // so for that we pass addional parameter and other information
