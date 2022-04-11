@@ -1,7 +1,7 @@
-import { Fragment, useContext } from "react";
-import { Outlet, Link } from "react-router-dom";
+import { Fragment } from "react";
+import { Outlet } from "react-router-dom";
 import { ReactComponent as PanwarLogo } from "../../assister/panwar.svg";
-import { UserContext } from "../../contex/user.context";
+// import { UserContext } from "../../contex/user.context";
 import {
   NavigationContainer,
   NavLink,
@@ -12,15 +12,16 @@ import { signOut } from "firebase/auth";
 import { auth } from "../../utilis/firebase.utils";
 import CartIcon from "../../components/cart-icon/cart-icon.component";
 import CartDropdown from "../../components/cart-dropdown/cart-dropdown.component";
-import { CartContext } from "../../contex/cart.context";
+// import { CartContext } from "../../contex/cart.context";
 import { selectCurrentUser } from "../../store/user/user.selector";
 import { useSelector } from "react-redux";
-
+import { selectIsCartOpen } from "../../store/cart/cart.selector";
 const Navigation = function () {
   // const { currentUser } = useContext(UserContext);
 
-  const { isCartOpen } = useContext(CartContext);
+  // const { isCartOpen } = useContext(CartContext);
   const currentUser = useSelector(selectCurrentUser);
+  const isCartOpen = useSelector(selectIsCartOpen);
 
   const signOutHandler = async () => {
     await signOut(auth);
