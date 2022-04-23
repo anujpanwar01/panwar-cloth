@@ -3,18 +3,20 @@ import logger from "redux-logger";
 import { rootReducer } from "./root-reducer";
 import { persistStore, persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
+import thunk from "redux-thunk";
 
 const persistConfig = {
   key: "root",
   storage,
-  blacklist: ["user"],
+  whiteList: ["cart"],
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
-const middleware = [process.env.NODE_ENV === "development" && logger].filter(
-  Boolean
-);
+const middleware = [
+  process.env.NODE_ENV === "development" && logger,
+  thunk,
+].filter(Boolean);
 // if development server is open then only it log the values
 //ex [2===3 && {a:"string"}].filter(Boolean) => false => it give us [];
 

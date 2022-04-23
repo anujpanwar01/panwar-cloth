@@ -15,7 +15,7 @@ export const selectCategories = createSelector(
   // the argument categorySlice coming from [selectCategoryReducer];
 );
 
-// out put selector
+// output selector
 export const categorySelector = createSelector(
   [selectCategories], //it will take the input selector function,
   (categories) => {
@@ -27,7 +27,10 @@ export const categorySelector = createSelector(
     }, {});
   }
 );
-
+export const selectCategoriesIsLoading = createSelector(
+  [selectCategoryReducer],
+  (categoriesSlice) => categoriesSlice.isLoading
+);
 // export const categorySelector = (state) =>
 //   state.categories.categories.reduce((acc, ele) => {
 //     const { title, items } = ele;
