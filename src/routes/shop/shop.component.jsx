@@ -13,8 +13,8 @@ const Shop = () => {
 
   useEffect(() => {
     const doc = async () => {
-      const res = await getCollectionAndDocRef();
-      console.log(res);
+      const res = await getCollectionAndDocRef("categories");
+
       dipatch(setCategories(res));
     };
 
@@ -25,9 +25,12 @@ const Shop = () => {
     <Routes>
       <Route index element={<CategoreisPreview />} />
       <Route path=":category" element={<Category />} />
-      <Route />
     </Routes>
-    /*{/* /* {Object.keys(categoriesMap).map((title) => (
+  );
+};
+export default Shop;
+
+/*{/* /* {Object.keys(categoriesMap).map((title) => (
         <Fragment key={title}>
           <h2>{title}</h2>
           <div className="products-container">
@@ -37,8 +40,5 @@ const Shop = () => {
           </div>
         </Fragment>
       ))} */
-    /* // )}
+/* // )}
     {/* </Fragment> */
-  );
-};
-export default Shop;
