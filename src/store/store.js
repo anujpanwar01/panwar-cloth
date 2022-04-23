@@ -1,24 +1,32 @@
 import { compose, createStore, applyMiddleware } from "redux";
 import logger from "redux-logger";
 import { rootReducer } from "./root-reducer";
+import { persistStore, persistReducer } from "redux-persist";
+import storage from "redux-persist/lib/storage";
 
-const loggerMiddleWare = function (store) {
-  return function (next) {
-    return function (action) {
-      if (!action.type) {
-        return next(action);
-      }
-      console.log("type :", action.type);
-      console.log("payload :", action.payload);
-      console.log("currentState :", store.getState());
-
-      next(action);
-
-      console.log("next state :", store.getState());
-    };
-  };
+const persistConfig = {
+  key: "root",
+  storage,
+  blacklist: ["user"],
 };
-const middleware = [loggerMiddleWare];
-const composeEnhancers = compose(applyMiddleware(...middleware));
 
-export const store = createStore(rootReducer, undefined, composeEnhancers);
+const persistedReducer = persistReducer(persistConfig, rootReducer);
+
+const middleware = [process.env.NODE_ENV === "development" && logger].filter(
+  Boolean
+);
+// if development server is open then only it log the values
+//ex [2===3 && {a:"string"}].filter(Boolean) => false => it give us [];
+
+// for redux devtools
+const composeEnhancer =
+  (process.env.NODE_ENV !== "production" &&
+    window &&
+    window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) ||
+  compose;
+
+const composeEnhancers = composeEnhancer(applyMiddleware(...middleware));
+
+export const store = createStore(persistedReducer, undefined, composeEnhancers);
+
+export const persistor = persistStore(store);

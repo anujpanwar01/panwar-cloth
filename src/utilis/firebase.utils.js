@@ -45,7 +45,11 @@ export const signInWithGoogleRedirect = () =>
 export const db = getFirestore();
 
 //set the data into firebase
-export const addCollectionAndDocument = async (collectionKey, objectToAdd) => {
+export const addCollectionAndDocument = async (
+  collectionKey,
+  objectToAdd,
+  field
+) => {
   const collectionRef = collection(db, collectionKey); //collectionKey is identifier of collections
   // ex :=> users collection, categories collection
   const batch = writeBatch(db);
@@ -65,7 +69,8 @@ export const getCollectionAndDocRef = async () => {
 
   const querySnapShot = await getDocs(q);
   return querySnapShot.docs.map((ele) => ele.data());
-  /*
+};
+/*
 {
   title:'hats',
   items:[
@@ -74,20 +79,20 @@ export const getCollectionAndDocRef = async () => {
   ]
 }
 */
-  // for this structure we need to map over the data
+// for this structure we need to map over the data
 
-  // const categoryMap = querySnapShot.docs.reduce((acc, ele) => {
-  //   const { title, items } = ele.data();
-  //   acc[title.toLowerCase()] = items;
-  //   return acc;
-  // }, {});
-  // return categoryMap;
-};
+// const categoryMap = querySnapShot.docs.reduce((acc, ele) => {
+//   const { title, items } = ele.data();
+//   acc[title.toLowerCase()] = items;
+//   return acc;
+// }, {});
+// return categoryMap;
+
 //additionaldata => we don't get back displayName in signup method
 // so for that we pass addional parameter and other information
 //and it will override the displayName method in firebase
 
-export const createUser = async function (userAuth, additonalData) {
+export const createUser = async function (userAuth, additonalData = {}) {
   if (!userAuth) return;
   const userDocRef = doc(db, "users", userAuth.uid);
 
@@ -113,6 +118,4 @@ export const createUser = async function (userAuth, additonalData) {
   return userDocRef;
 };
 
-export const userObserver = (callback) => {
-  onAuthStateChanged(auth, callback);
-};
+export const userObserver = (callback) => onAuthStateChanged(auth, callback);
